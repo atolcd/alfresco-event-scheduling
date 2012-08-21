@@ -1,0 +1,156 @@
+<alfresco-config>
+  <config evaluator="node-type" condition="evtsched:event">
+      <forms>
+        <!-- Default form configuration for the 'evtsched:event' type -->
+        <form>
+            <field-visibility>
+               <show id="cm:title" force="true" />
+               <show id="evtsched:place" />
+               <show id="cm:description" force="true" />
+               <show id="cm:to" force="true" />
+               <show id="evtsched:visibility" for-mode="view" />
+               <show id="evtsched:lastUpdate" for-mode="view" />
+               <show id="evtsched:dates" for-mode="view" />
+            </field-visibility>
+
+            <appearance>
+               <field id="cm:title">
+                  <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+               </field>
+               <field id="cm:description">
+                  <control>
+                     <control-param name="activateLinks">true</control-param>
+                  </control>
+               </field>
+            </appearance>
+        </form>
+
+        <!-- Document Library pop-up Edit Metadata form -->
+        <form id="doclib-simple-metadata">
+            <field-visibility>
+               <show id="cm:title" force="true" />
+               <show id="evtsched:place" />
+               <show id="cm:description" force="true" />
+               <show id="cm:to" force="true" />
+               <show id="evtsched:visibility" />
+               <show id="evtsched:lastUpdate" />
+            </field-visibility>
+            <edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
+            <appearance>
+               <field id="cm:title">
+                  <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+               </field>
+               <field id="cm:description">
+                  <control>
+                     <control-param name="activateLinks">true</control-param>
+                  </control>
+               </field>
+               <field id="evtsched:visibility" read-only="true" />
+               <field id="evtsched:lastUpdate" read-only="true" />
+            </appearance>
+        </form>
+    </forms>
+  </config>
+
+  <config evaluator="node-type" condition="evtsched:eventDate">
+      <forms>
+        <!-- Default form configuration for the 'evtsched:eventDate' type -->
+        <form>
+            <field-visibility>
+               <show id="cm:name" />
+               <show id="cm:title" force="true" />
+               <show id="evtsched:date" for-mode="view" />
+               <show id="evtsched:times" for-mode="view" />
+            </field-visibility>
+
+            <appearance>
+               <field id="cm:name" read-only="true" />
+               <field id="cm:title">
+                  <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+               </field>
+            </appearance>
+        </form>
+
+        <!-- Document Library pop-up Edit Metadata form -->
+        <form id="doclib-simple-metadata">
+            <field-visibility>
+               <show id="cm:name" />
+               <show id="cm:title" force="true" />
+               <show id="evtsched:date" for-mode="view" />
+            </field-visibility>
+            <edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
+            <appearance>
+               <field id="cm:name" read-only="true" />
+               <field id="cm:title">
+                  <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+               </field>
+               <field id="evtsched:date" read-only="true" />
+            </appearance>
+        </form>
+    </forms>
+  </config>
+
+  <config evaluator="node-type" condition="evtsched:eventTime">
+      <forms>
+        <!-- Default form configuration for the 'evtsched:eventTime' type -->
+        <form>
+            <field-visibility>
+               <show id="cm:name" />
+               <show id="cm:title" force="true" />
+            </field-visibility>
+
+            <appearance>
+               <field id="cm:title">
+                  <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+               </field>
+            </appearance>
+        </form>
+
+        <!-- Document Library pop-up Edit Metadata form -->
+        <form id="doclib-simple-metadata">
+            <field-visibility>
+               <show id="cm:name" />
+               <show id="cm:title" force="true" />
+            </field-visibility>
+            <edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
+            <appearance>
+               <field id="cm:title">
+                  <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+               </field>
+            </appearance>
+        </form>
+    </forms>
+  </config>
+
+  <!-- Theoretically not visible in the Share UI -->
+  <config evaluator="node-type" condition="evtsched:response">
+      <forms>
+        <!-- Default form configuration for the 'evtsched:response' type -->
+        <form>
+            <field-visibility>
+               <show id="cm:name" />
+               <show id="evtsched:response" />
+            </field-visibility>
+
+            <appearance>
+               <field id="cm:name" read-only="true" />
+               <field id="evtsched:response" read-only="true" />
+            </appearance>
+        </form>
+
+        <!-- Document Library pop-up Edit Metadata form -->
+        <form id="doclib-simple-metadata">
+            <field-visibility>
+               <show id="cm:name" />
+               <show id="evtsched:response" />
+            </field-visibility>
+            <edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
+            <appearance>
+               <field id="cm:name" read-only="true" />
+               <field id="evtsched:response" read-only="true" />
+            </appearance>
+        </form>
+    </forms>
+  </config>
+
+</alfresco-config>

@@ -1,0 +1,1 @@
+<#include "schedule-event.post.json.ftl">

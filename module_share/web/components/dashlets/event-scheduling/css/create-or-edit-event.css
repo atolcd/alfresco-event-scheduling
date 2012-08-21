@@ -1,0 +1,140 @@
+/*
+ * Copyright (C) 2012 Atol Conseils et Développements.
+ * http://www.atolcd.com/
+ * Author: Bertrand FOREST
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+/* Create/Edit dialog */
+.create-event-dialog .fields-container {
+  padding: 1em 2em;
+}
+
+.create-event-dialog label {
+  display: block;
+}
+
+.create-event-dialog label.inline-label {
+  display: inline;
+}
+
+.create-event-dialog input[type=text], .create-event-dialog textarea  {
+  width: 40em;
+}
+
+.create-event-dialog fieldset {
+  border: 1px dotted #C5D6E2;
+  padding: 8px;
+}
+
+.create-event-dialog div.separator {
+  margin-right: 10px;
+  padding-left: 10px;
+}
+
+.create-event-dialog .add-date {
+  float: right;
+}
+
+
+/* Authority Finder */
+.create-event-dialog .authority {
+  display: inline;
+  margin-right: 1em;
+  padding-left: 1.5em;
+  padding-top: 2px;
+}
+.create-event-dialog .authority.group {
+  background: url("../images/icons/group-16.png") no-repeat scroll left center transparent;
+}
+.create-event-dialog .authority.user {
+  background: url("../images/icons/user-16.png") no-repeat scroll left center transparent;
+}
+
+.create-event-dialog .authority-finder-container {
+  display: none;
+  position: absolute;
+  z-index: 100;
+  min-width: 30em;
+  *width: 30em;
+}
+
+.create-event-dialog .authority-finder.compact .results {
+  min-height: 215px;
+}
+
+.create-event-dialog .authority-finder-container .authority-finder {
+  margin: 10px;
+}
+
+.create-event-dialog .authority-finder-container .authority-finder .finder-wrapper {
+  margin-top: 0;
+}
+
+.create-event-dialog .authority-finder-container.active {
+  display: inline;
+}
+
+/* Date picker */
+.create-event-dialog .dates-container {
+  margin-top: 10px;
+}
+
+.create-event-dialog input.datepicker-date {
+  width: 15em;
+}
+
+.create-event-dialog input.datepicker-time {
+  width: 5em;
+}
+
+.create-event-dialog .calendarpicker a {
+  background: url("../images/icons/calendar-16.png") no-repeat scroll center center transparent;
+  overflow: hidden;
+  text-align: left;
+  text-indent: -10em;
+  white-space: nowrap;
+  *margin-left: 10em; /* For IE */
+  *padding: 0 0.7em; /* For IE */
+  *vertical-align: top; /* For IE */
+}
+.create-event-dialog .calendarpicker {
+  background: none repeat scroll 0 0 transparent;
+  border: 0 none;
+}
+.create-event-dialog .calendarpicker {
+  vertical-align: middle;
+}
+.create-event-dialog .calendarpicker span {
+  border: 0 none !important;
+}
+.create-event-dialog  .yui-calendar {
+  border-collapse: separate;
+}
+.create-event-dialog .calendarcontainer {
+  padding: 10px;
+  width: 182px;
+}
+.create-event-dialog .calendarmenu {
+  border: 1px solid #bfbfbf;
+  position: absolute;
+  overflow: visible;
+}
+.create-event-dialog .yui-calcontainer .title {
+  background: none repeat scroll 0 0 transparent;
+  padding: 0;
+  position: relative;
+}

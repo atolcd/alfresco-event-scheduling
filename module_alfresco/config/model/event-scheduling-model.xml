@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="evtsched:eventSchedulingModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+  <description>Event Scheduling Model</description>
+  <author>Bertrand FOREST</author>
+  <version>1.0</version>
+
+  <imports>
+    <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+    <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+  </imports>
+
+  <namespaces>
+    <namespace uri="http://www.atolcd.com/model/eventScheduling/1.0" prefix="evtsched" />
+  </namespaces>
+
+  <constraints>
+    <constraint name="evtsched:const-event-visibility" type="LIST">
+      <parameter name="allowedValues">
+        <list>
+          <value>public</value>
+          <value>private</value>
+        </list>
+      </parameter>
+    </constraint>
+  </constraints>
+
+  <types>
+    <type name="evtsched:event">
+      <title>Event</title>
+      <parent>cm:folder</parent>
+      <properties>
+        <property name="evtsched:place">
+          <type>d:text</type>
+        </property>
+        <property name="evtsched:visibility">
+          <type>d:text</type>
+          <default>public</default>
+          <constraints>
+            <constraint ref="evtsched:const-event-visibility" />
+          </constraints>
+        </property>
+        <property name="evtsched:lastUpdate">
+          <type>d:datetime</type>
+        </property>
+        <property name="evtsched:archived">
+          <type>d:boolean</type>
+          <default>false</default>
+        </property>
+      </properties>
+      <associations>
+        <child-association name="evtsched:dates">
+          <source>
+            <mandatory>false</mandatory>
+            <many>true</many>
+          </source>
+          <target>
+            <class>evtsched:eventDate</class>
+            <mandatory>false</mandatory>
+            <many>true</many>
+          </target>
+          <duplicate>false</duplicate>
+          <propagateTimestamps>true</propagateTimestamps>
+        </child-association>
+        <child-association name="evtsched:history">
+          <source>
+            <mandatory>false</mandatory>
+            <many>false</many>
+          </source>
+          <target>
+            <class>cm:systemfolder</class>
+            <mandatory>false</mandatory>
+            <many>false</many>
+          </target>
+          <duplicate>false</duplicate>
+        </child-association>
+      </associations>
+      <mandatory-aspects>
+        <aspect>cm:effectivity</aspect>
+      </mandatory-aspects>
+    </type>
+
+    <type name="evtsched:historyItem">
+      <parent>cm:cmobject</parent>
+      <properties>
+        <property name="evtsched:evtType">
+          <type>d:text</type>
+          <default>user-answer</default>
+        </property>
+        <property name="evtsched:evtDate">
+          <type>d:date</type>
+        </property>
+        <property name="evtsched:evtTime">
+          <type>d:text</type>
+        </property>
+        <property name="evtsched:user">
+          <type>d:text</type>
+        </property>
+      </properties>
+    </type>
+
+    <type name="evtsched:eventDate">
+      <title>Event date</title>
+      <parent>cm:folder</parent>
+      <properties>
+        <property name="evtsched:date">
+          <type>d:date</type>
+        </property>
+      </properties>
+      <associations>
+        <child-association name="evtsched:times">
+          <source>
+            <mandatory>false</mandatory>
+            <many>true</many>
+          </source>
+          <target>
+            <class>evtsched:eventTime</class>
+            <mandatory>false</mandatory>
+            <many>true</many>
+          </target>
+          <duplicate>false</duplicate>
+          <propagateTimestamps>true</propagateTimestamps>
+        </child-association>
+      </associations>
+      <mandatory-aspects>
+        <aspect>evtsched:eventResponses</aspect>
+      </mandatory-aspects>
+    </type>
+
+    <type name="evtsched:eventTime">
+      <title>Event time</title>
+      <parent>cm:folder</parent>
+      <properties></properties>
+      <mandatory-aspects>
+        <aspect>evtsched:eventResponses</aspect>
+      </mandatory-aspects>
+    </type>
+
+    <type name="evtsched:response">
+      <title>Event response</title>
+      <parent>cm:cmobject</parent>
+      <properties>
+        <property name="evtsched:response">
+          <type>d:boolean</type>
+        </property>
+      </properties>
+    </type>
+  </types>
+
+  <aspects>
+    <aspect name="evtsched:eventResponses">
+      <properties></properties>
+      <associations>
+        <child-association name="evtsched:responses">
+          <source>
+            <mandatory>false</mandatory>
+            <many>true</many>
+          </source>
+          <target>
+            <class>evtsched:response</class>
+            <mandatory>false</mandatory>
+            <many>true</many>
+          </target>
+          <duplicate>false</duplicate>
+          <propagateTimestamps>true</propagateTimestamps>
+        </child-association>
+      </associations>
+    </aspect>
+  </aspects>
+
+</model>

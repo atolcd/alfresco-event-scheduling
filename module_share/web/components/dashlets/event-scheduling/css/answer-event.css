@@ -1,0 +1,146 @@
+/*
+ * Copyright (C) 2012 Atol Conseils et Développements.
+ * http://www.atolcd.com/
+ * Author: Bertrand FOREST
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.answer-event .standalone-title {
+  border-bottom: 1px solid #CCCCCC;
+  color: #606060;
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  padding: 15px 5px 10px;
+}
+
+.answer-event .status-banner {
+  margin-top: 0.75em;
+  padding: 0.5em 1em;
+}
+
+.answer-event .event-details-container {
+  padding: 5px;
+}
+
+.answer-event .event-details {
+  padding: 5px 0 10px !important;
+}
+
+.answer-event .left, .answer-event .right {
+  float: left;
+  width: 50%;
+}
+
+.answer-event .evt-property {
+  float: left;
+  text-align: left;
+}
+
+.answer-event .evt-property.first {
+  font-weight: bold;
+  padding-left: 1em;
+  width: 130px;
+}
+
+.answer-event .yui-dt table {
+  border-spacing: 1px;
+  width: 100%;
+}
+
+.answer-event .yui-dt-liner {
+  padding: 0;
+}
+.answer-event .yui-dt th .yui-dt-liner {
+  padding: 4px 2px;
+}
+
+.answer-event .yui-dt th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.answer-event .yui-dt .th-month {
+  font-weight: bold;
+}
+
+.answer-event .count {
+  color: #000000;
+  float: left;
+}
+
+.answer-event .user {
+  background: url("../images/icons/user-16.png") no-repeat scroll left center transparent;
+  padding-left: 1.5em;
+}
+
+.answer-event .yui-dt-col-user .yui-dt-liner {
+  padding: 4px;
+}
+
+.answer-event .response {
+  height: 18px;
+  text-align: center;
+  padding: 5px;
+}
+
+.answer-event .response.yes {
+  background-color: #CCE5CC;
+}
+
+.answer-event .response.no {
+  background-color: #FFCCCA;
+}
+
+.answer-event .response.dnk {
+  background-color: #EAEAEA;
+  color: #CCCCCC;
+  font-weight: bold;
+}
+
+.answer-event .participants-count.yui-dt thead {
+  display: none;
+}
+
+.answer-event td.yui-dt-col-actions {
+  text-align: center;
+}
+
+.answer-event .participants-count.yui-dt .yui-dt-liner {
+  font-weight: bold;
+  text-align: center;
+}
+
+.answer-event .participants-count {
+  padding-top: 5px;
+}
+
+.answer-event a.notify-user {
+  background: url("../images/actions/send-mail-16.png") no-repeat scroll center center transparent;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.answer-event .standalone-page-link {
+  bottom: 10px;
+  position: absolute;
+  right: 10px;
+}
+
+
+/* YUI */
+.answer-event tr.yui-dt-selected td, .answer-event tr.yui-dt-selected td.yui-dt-asc, .answer-event tr.yui-dt-selected td.yui-dt-desc {
+  background-color: #B2D2FF;
+  color: #FFFFFF;
+}

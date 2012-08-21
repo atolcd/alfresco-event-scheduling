@@ -1,0 +1,156 @@
+/*
+ * Copyright (C) 2012 Atol Conseils et Développements.
+ * http://www.atolcd.com/
+ * Author: Bertrand FOREST
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.dashlet-events .scrollableList {
+  padding: 0;
+}
+
+/* Footer */
+.dashlet-events .footer {
+  background-color: #F6F6F6;
+  border-bottom: 1px solid #D3D3D3;
+  border-top: 1px solid #D3D3D3;
+  font-family: arial,verdana,helvetica,clean,sans-serif;
+  font-size: 0.9em;
+  height: 20px;
+  padding: 1px 5px 1px 10px;
+  text-align: left;
+}
+.dashlet-events .footer-atol {
+  float: right;
+  padding-top: 2px;
+}
+.dashlet-events .footer-left {
+  float: left;
+}
+.dashlet-events .footer-left .yui-pg-container {
+  margin: 0;
+}
+
+/* Refresh button */
+.dashlet-events .refresh {
+  background-image: url("../images/refresh.png");
+}
+.dashlet-events .refresh-loading {
+  background-image: url("../images/refresh_loading.gif");
+}
+.dashlet-events .refresh:hover {
+  background-image: url("../images/refresh_hover.png");
+}
+
+/* Create event button */
+.dashlet-events .createEvent {
+  background-image: url("../images/actions/create-event-16.png");
+}
+
+/* datatable */
+.dashlet-events .yui-dt-col-participated div {
+  text-align: center;
+}
+.dashlet-events .yui-dt-col-participated img {
+  margin-top: 0.2em;
+}
+.dashlet-events .event-status {
+  display: inline-block;
+  padding: 3px 2px;
+  width: 16px;
+}
+.dashlet-events .event-status img {
+  margin-top: 0;
+}
+.dashlet-events .yui-dt-col-eventDescription div {
+  line-height: 1.4;
+}
+.dashlet-events .event-title {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.dashlet-events .event-visibility {
+  font-size: 0.9em;
+}
+.dashlet-events .created-by {
+}
+.dashlet-events .participants {
+}
+.dashlet-events .last-activity {
+  font-size: 0.9em;
+  font-style: italic;
+}
+.dashlet-events span.separator {
+  margin: 0 10px;
+}
+
+/* datatable actions */
+.dashlet-events .yui-dt-col-actions div.yui-dt-liner {
+  float: right;
+}
+.dashlet-events .action-group.firstel {
+  padding-bottom: 5px;
+}
+.dashlet-events .action-group {
+  float: right;
+  padding: 2px 0;
+}
+.dashlet-events a.edit-event {
+  background: url("../images/actions/edit-event-16.png") no-repeat scroll center center transparent;
+}
+.dashlet-events a.delete-event {
+  background: url("../images/actions/delete-event-16.png") no-repeat scroll center center transparent;
+}
+.dashlet-events a.view-event {
+  background: url("../images/actions/view-event-16.png") no-repeat scroll center center transparent;
+}
+.dashlet-events a.answer-event {
+  background: url("../images/actions/answer-event-16.png") no-repeat scroll center center transparent;
+}
+.dashlet-events a.archive-event {
+  background: url("../images/actions/archive-event-16.png") no-repeat scroll center center transparent;
+}
+.dashlet-events a.unarchive-event {
+  background: url("../images/actions/unarchive-event-16.png") no-repeat scroll center center transparent;
+}
+.dashlet-events a.view-history-event {
+  background: url("../images/actions/view-history-event-16.png") no-repeat scroll center center transparent;
+}
+.dashlet-events a.edit-event, .dashlet-events a.delete-event , .dashlet-events a.view-event , .dashlet-events a.answer-event , .dashlet-events a.archive-event, .dashlet-events a.unarchive-event, .dashlet-events a.view-history-event {
+  cursor: pointer;
+  padding: 5px 10px;
+  visibility: hidden;
+}
+
+.event-history-dialog .historyItems {
+  height: 250px;
+  margin-bottom: 10px;
+  overflow-y: auto;
+  padding: 10px;
+}
+.event-history-dialog .historyItems .historyItem {
+  padding: 4px 0;
+}
+
+/* datatable highlight */
+.dashlet-events .yui-dt-col-name a:active, .dashlet-events .yui-dt-col-name a:hover {
+  text-decoration: none;
+}
+.dashlet-events .yui-dt-highlighted a {
+  visibility: visible;
+}
+.dashlet-events tr.yui-dt-highlighted {
+  background-color: #E4F3FA !important;
+}

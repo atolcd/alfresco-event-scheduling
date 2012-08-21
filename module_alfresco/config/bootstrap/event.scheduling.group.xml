@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view:view xmlns:view="http://www.alfresco.org/view/repository/1.0" xmlns:cm="http://www.alfresco.org/model/content/1.0" xmlns:sys="http://www.alfresco.org/model/system/1.0">
+  <cm:authorityContainer view:childName="cm:GROUP_EVENT_SCHEDULED_CREATORS">
+    <view:aspects>
+      <sys:referenceable />
+    </view:aspects>
+    <view:properties>
+      <sys:node-uuid>GROUP_EVENT_SCHEDULED_CREATORS</sys:node-uuid>
+      <cm:name>GROUP_EVENT_SCHEDULED_CREATORS</cm:name>
+      <cm:authorityName>GROUP_EVENT_SCHEDULED_CREATORS</cm:authorityName>
+      <cm:authorityDisplayName>${group.event_scheduled.displayName}</cm:authorityDisplayName>
+    </view:properties>
+  </cm:authorityContainer>
+</view:view>
