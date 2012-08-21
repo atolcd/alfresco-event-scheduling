@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<project name="Event scheduling (Share)" default="prepare-package-amp" basedir=".">
+  <property file="${basedir}/build.properties" />
+
+  <property name="project.dir" value="."/>
+  <property name="build.dir" value="${project.dir}/build"/>
+  <property name="dist.dir" value="${project.dir}/dist"/>
+  <property name="amp.file" value="${dist.dir}/${module.id}.amp"/>
+  <property name="web.dir" value="${project.dir}/web" />
+
+  <path id="yuicompressor.classpath">
+    <fileset dir="lib">
+      <include name="yuicompressor-2.4.2.jar"/>
+      <include name="yui-compressor-ant-task-0.5.jar"/>
+    </fileset>
+  </path>
+
+  <taskdef name="yuicompress" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
+    <classpath>
+      <path refid="yuicompressor.classpath"/>
+    </classpath>
+  </taskdef>
+
+  <!-- Nettoyage des fichiers -min.js -->
+  <target name="clean.js.minify">
+    <delete includeemptydirs="true">
+      <fileset dir="${web.dir}" includes="**/*-min.js" />
+    </delete>
+  </target>
+
+  <!-- Make Dirs -->
+  <target name="mkdirs" depends="clean">
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${dist.dir}" />
+  </target>
+
+  <!-- Clean -->
+  <target name="clean">
+    <delete file="${amp.file}" />
+    <delete dir="${build.dir}/classes" />
+    <delete dir="${build.dir}" />
+  </target>
+
+
+  <!-- Package AMP for Share -->
+  <target name="prepare-package-amp" depends="mkdirs, add-web-to-package-amp, add-config-to-package-amp" description="Package the Module for Share" >
+    <zip destfile="${amp.file}" update="true">
+      <fileset dir="${project.dir}/" includes="*.properties" excludes="build.properties" />
+    </zip>
+  </target>
+
+  <!-- Web -->
+  <target name="add-web-to-package-amp">
+    <!-- Minify JS -->
+    <yuicompress fromdir="${web.dir}" todir="${web.dir}" excludes="**/*-min.js" warn="yuicompress.warn">
+      <include name="**/*.js" />
+    </yuicompress>
+
+    <zip destfile="${amp.file}" update="true">
+      <zipfileset dir="${web.dir}" prefix="web" />
+    </zip>
+
+    <!-- Clean -->
+    <antcall target="clean.js.minify" />
+  </target>
+
+  <!-- Config (Webscripts, Site data, Messages, ...)  -->
+  <target name="add-config-to-package-amp">
+    <zip destfile="${amp.file}" update="true">
+      <zipfileset dir="${project.dir}/config" prefix="WEB-INF/classes/alfresco" />
+    </zip>
+  </target>
+</project>
