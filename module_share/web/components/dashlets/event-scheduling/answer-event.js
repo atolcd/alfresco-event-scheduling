@@ -161,7 +161,7 @@
     onDataRetrived: function AnswerEventDialog_onDataRetrived(response, displayIntoDialog) {
       if (displayIntoDialog) {
         /** Dialog **/
-        var recommandedWidth = this.options.userColumnWidth + ((response.json.fields.length - 1) * 110) + ((this.options.eventDetails.isOwner && !this.options.eventDetails.isArchived) ? 24 : 0); // pixels
+        var recommandedWidth = this.options.userColumnWidth + ((response.json.fields.length - 1) * 110) + ((this.options.eventDetails.isOwner && !this.options.eventDetails.isArchived && !this.options.eventDetails.isLocked) ? 24 : 0); // pixels
         var dialogWidth = (recommandedWidth > window.innerWidth) ? window.innerWidth * 0.98 : recommandedWidth;
         if (dialogWidth < this.options.minDialogWidth) {
           dialogWidth = this.options.minDialogWidth;
@@ -322,7 +322,7 @@
         } else { /* Not allowed to edit this user */ }
       };
 
-      if (!evt.isArchived) {
+      if (!evt.isArchived && !evt.isLocked) {
         this.widgets.datatable.subscribe("cellMouseoverEvent", highlightEditableCell);
         this.widgets.datatable.subscribe("cellMouseoutEvent", this.widgets.datatable.onEventUnhighlightCell);
         this.widgets.datatable.subscribe("cellClickEvent", onEventShowCellEditor);
@@ -540,7 +540,7 @@
       }
 
       // add 'actions' column for event owner
-      if (this.options.eventDetails.isOwner && !this.options.eventDetails.isArchived) {
+      if (this.options.eventDetails.isOwner && !this.options.eventDetails.isArchived && !this.options.eventDetails.isLocked) {
         columnDefs.push({
             key: "actions",
             label: '&nbsp;',
@@ -695,7 +695,7 @@
       }
 
       // add 'actions' column for event owner
-      if (this.options.eventDetails.isOwner && !this.options.eventDetails.isArchived) {
+      if (this.options.eventDetails.isOwner && !this.options.eventDetails.isArchived && !this.options.eventDetails.isLocked) {
         dtColumnDefs.push({
             key: "actions",
             label: '&nbsp;',

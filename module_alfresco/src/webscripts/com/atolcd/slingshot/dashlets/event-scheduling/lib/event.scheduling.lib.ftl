@@ -27,6 +27,7 @@
     "description": "${event.node.properties["cm:description"]!""}",
     "siteId": <#if siteId?has_content>"${siteId}", "siteTitle": "${eventSchedulingUtils.getSiteTitle(siteId)!""}"<#else>null</#if>,
     "isArchived": ${event.node.properties["evtsched:archived"]?string},
+    "isLocked": ${(event.node.properties["evtsched:locked"]!"false")?string},
     "visibility": "${event.node.properties["evtsched:visibility"]}",
     "createdBy": "${event.createdBy!""}",
     "createdByUser": "${event.createdByUser!""}",

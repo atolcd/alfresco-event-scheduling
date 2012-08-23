@@ -11,6 +11,8 @@
                <show id="evtsched:visibility" for-mode="view" />
                <show id="evtsched:lastUpdate" for-mode="view" />
                <show id="evtsched:dates" for-mode="view" />
+               <show id="evtsched:locked" />
+               <show id="evtsched:archived" />
             </field-visibility>
 
             <appearance>
@@ -34,6 +36,8 @@
                <show id="cm:to" force="true" />
                <show id="evtsched:visibility" />
                <show id="evtsched:lastUpdate" />
+               <show id="evtsched:locked" />
+               <show id="evtsched:archived" />
             </field-visibility>
             <edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
             <appearance>

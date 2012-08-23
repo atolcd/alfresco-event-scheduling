@@ -128,7 +128,13 @@
 .dashlet-events a.view-history-event {
   background: url("../images/actions/view-history-event-16.png") no-repeat scroll center center transparent;
 }
-.dashlet-events a.edit-event, .dashlet-events a.delete-event , .dashlet-events a.view-event , .dashlet-events a.answer-event , .dashlet-events a.archive-event, .dashlet-events a.unarchive-event, .dashlet-events a.view-history-event {
+.dashlet-events a.lock-event {
+  background: url("../images/actions/lock-event-16.png") no-repeat scroll center center transparent;
+}
+.dashlet-events a.unlock-event {
+  background: url("../images/actions/unlock-event-16.png") no-repeat scroll center center transparent;
+}
+.dashlet-events a.edit-event, .dashlet-events a.delete-event , .dashlet-events a.view-event , .dashlet-events a.answer-event , .dashlet-events a.archive-event, .dashlet-events a.unarchive-event, .dashlet-events a.view-history-event, .dashlet-events a.lock-event, .dashlet-events a.unlock-event {
   cursor: pointer;
   padding: 5px 10px;
   visibility: hidden;

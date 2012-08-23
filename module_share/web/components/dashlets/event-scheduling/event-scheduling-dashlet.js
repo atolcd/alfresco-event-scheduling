@@ -452,8 +452,8 @@
                     '</div>';
           }
 
+          // validity
           if (data.validityDate) {
-            // validity
             var today = new Date().getTime();
             var expireDate = fromISO8601(data.validityDate.isoDate).getTime();
             if (today > expireDate) {
@@ -465,6 +465,13 @@
                         '<img src="' + Alfresco.constants.URL_RESCONTEXT + 'components/dashlets/event-scheduling/images/indicators/expire-soon-16.png" title="' + this.msg("label.help.expire-soon") + '" />' +
                       '</div>';
             }
+          }
+
+          // locked
+          if (data.isLocked) {
+            desc += '<div class="event-status">' +
+                      '<img src="' + Alfresco.constants.URL_RESCONTEXT + 'components/dashlets/event-scheduling/images/indicators/locked-16.png" title="' + this.msg("label.help.locked") + '" />' +
+                    '</div>';
           }
         }
 
@@ -526,9 +533,15 @@
           if (data.isArchived) {
             desc += '<span class="onUnArchiveEvent"><a href="#" class="action-link unarchive-event" title="' + this.msg("action.unarchive-event") + '">&nbsp;</a></span>';
           } else {
-            oColumn.width = 75;
+            if (data.isLocked) {
+              oColumn.width = 75;
+              desc += '<span class="onUnlockEvent"><a href="#" class="action-link unlock-event" title="' + this.msg("action.unlock-event") + '">&nbsp;</a></span>';
+            } else {
+              oColumn.width = 100;
+              desc += '<span class="onLockEvent"><a href="#" class="action-link lock-event" title="' + this.msg("action.lock-event") + '">&nbsp;</a></span>';
+              desc += '<span class="onEditEvent"><a href="#" class="action-link edit-event" title="' + this.msg("action.edit-event") + '">&nbsp;</a></span>';
+            }
 
-            desc += '<span class="onEditEvent"><a href="#" class="action-link edit-event" title="' + this.msg("action.edit-event") + '">&nbsp;</a></span>';
             desc += '<span class="onArchiveEvent"><a href="#" class="action-link archive-event" title="' + this.msg("action.archive-event") + '">&nbsp;</a></span>';
           }
           desc += '<span class="onDeleteEvent"><a href="#" class="action-link delete-event" title="' + this.msg("action.delete-event") + '">&nbsp;</a></span>';
@@ -537,11 +550,14 @@
 
         desc += '<div class="action-group">';
         if (data.isOwner) {
-          oColumn.width = 75;
+          if (oColumn.width < 75) {
+            oColumn.width = 75;
+          }
+
           desc += '<span class="onViewEventHistory"><a href="#" class="action-link view-history-event" title="' + this.msg("action.view-history") + '">&nbsp;</a></span>';
         }
         desc += '<span class="onViewEvent"><a href="#" class="action-link view-event" title="' + this.msg("action.view-event") + '">&nbsp;</a></span>';
-        desc += '<span class="onAnswerEvent"><a href="#" class="action-link answer-event" title="' + this.msg(data.isArchived ? "action.view-answers" : "action.answer-event") + '">&nbsp;</a></span>';
+        desc += '<span class="onAnswerEvent"><a href="#" class="action-link answer-event" title="' + this.msg((data.isArchived || data.isLocked) ? "action.view-answers" : "action.answer-event") + '">&nbsp;</a></span>';
         desc += '</div>';
       }
 
@@ -644,17 +660,25 @@
       if (value == false) {
         action = "unarchive";
       }
+      this._showUpdateMetadataDialog(item, action, "prop_evtsched_archived", (action == "archive"));
+    },
 
+    onUnArchiveEvent: function EventScheduling_onUnArchiveEvent(item) {
+      this.onArchiveEvent(item, false);
+    },
+
+    _showUpdateMetadataDialog: function EventScheduling__showUpdateMetadataDialog(item, action, property, value) {
       var me = this;
       Alfresco.util.PopupManager.displayPrompt({
         title: this.msg("action." + action + "-event"),
         text: this.msg("message.confirm." + action, item.title),
+        noEscape: true,
         buttons: [
         {
           text: this.msg("button." + action),
           handler: function() {
             this.destroy();
-            me._onActionArchvieConfirm.call(me, item, action, (action == "archive"));
+            me._onUpdateMetadataActionConfirm.call(me, item, action, property, value);
           }
         },
         {
@@ -667,8 +691,12 @@
       });
     },
 
-    _onActionArchvieConfirm: function EventScheduling__onActionArchvieConfirm(item, action, value) {
+    _onUpdateMetadataActionConfirm: function EventScheduling__onUpdateMetadataActionConfirm(item, action, property, value) {
       var nodeRef = new Alfresco.util.NodeRef(item.nodeRef);
+      var dataObj = {
+        "prop_evtsched_lastUpdate": toISO8601(new Date())
+      };
+      dataObj[property] = value;
 
       // execute ajax request
       var url = Alfresco.constants.PROXY_URI + "/api/node/" + nodeRef.uri + "/formprocessor";
@@ -678,10 +706,7 @@
         method: Alfresco.util.Ajax.POST,
         requestContentType : "application/json",
         responseContentType : "application/json",
-        dataObj: {
-          "prop_evtsched_archived": value,
-          "prop_evtsched_lastUpdate": toISO8601(new Date())
-        },
+        dataObj: dataObj,
         successCallback: {
           fn: this.refreshEvents,
           scope: this
@@ -691,8 +716,16 @@
       });
     },
 
-    onUnArchiveEvent: function EventScheduling_onUnArchiveEvent(item) {
-      this.onArchiveEvent(item, false);
+    onLockEvent: function EventScheduling_onLockEvent(item, value) {
+      var action = "lock";
+      if (value == false) {
+        action = "unlock";
+      }
+      this._showUpdateMetadataDialog(item, action, "prop_evtsched_locked", (action == "lock"));
+    },
+
+    onUnlockEvent: function EventScheduling_onUnlockEvent(item) {
+      this.onLockEvent(item, false);
     },
 
     onDeleteEvent: function EventScheduling_onDeleteEvent(item) {
