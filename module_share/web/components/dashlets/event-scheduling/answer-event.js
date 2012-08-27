@@ -154,7 +154,7 @@
       Dom.setStyle(elCell.parentNode, "width", oColumn.width + "px");
 
       if (data.user.exists === "true") {
-        elCell.innerHTML = '<div class="onNotifyUser"><a href="#" class="answer-dialog-action-link notify-user" title="' + this.msg("label.action.onNotifyUser", data.user.displayName) + '">&nbsp;</a></div>';;
+        elCell.innerHTML = '<div class="onNotifyUser"><a href="#" class="answer-dialog-action-link notify-user" title="' + this.msg("label.action.onNotifyUser", data.user.displayName) + '">&nbsp;</a></div>';
       }
     },
 
@@ -548,7 +548,12 @@
             formatter: function(elCell, oRecord, oColumn, oData) {
               oColumn.width = 24;
               Dom.setStyle(elCell.parentNode, "width", oColumn.width + "px");
-              elCell.innerHTML = '<div class="onNotifyAllUsers"><a href="#" class="answer-dialog-action-link notify-user" title="' + me.msg("label.action.onNotifyAllUsers") + '">&nbsp;</a></div>';;
+
+              if (me.options.eventDetails.visibility == "private") {
+                elCell.innerHTML = '<div class="onNotifyAllUsers"><a href="#" class="answer-dialog-action-link notify-user" title="' + me.msg("label.action.onNotifyAllUsers") + '">&nbsp;</a></div>';
+              } else {
+                elCell.innerHTML = "";
+              }
             }
           }
         );
