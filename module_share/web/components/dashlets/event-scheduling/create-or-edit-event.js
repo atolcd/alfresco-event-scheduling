@@ -340,7 +340,7 @@
 
       this.calendarMenus[calendarMenuId].render(Dom.getAncestorByTagName(targetEl.id, 'div'));
 
-      var d =  Alfresco.CalendarHelper.getDateFromField(domEl)
+      var d =  Alfresco.CalendarHelper.getDateFromField(domEl) || new Date();
       var pagedate = Alfresco.CalendarHelper.padZeros(d.getMonth() + 1) + '/' + d.getFullYear();
       var options = {
         pagedate: pagedate,

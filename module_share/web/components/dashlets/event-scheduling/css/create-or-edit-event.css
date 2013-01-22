@@ -89,6 +89,10 @@
 }
 
 /* Date picker */
+.create-event-dialog .yui-module.yui-overlay {
+  font-size: 100%;
+}
+
 .create-event-dialog .dates-container {
   margin-top: 10px;
 }
@@ -135,6 +139,7 @@
 }
 .create-event-dialog .yui-calcontainer .title {
   background: none repeat scroll 0 0 transparent;
+  margin: 0 -7px 10px;
   padding: 0;
   position: relative;
 }
