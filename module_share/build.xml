@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <project name="Event scheduling (Share)" default="prepare-package-amp" basedir=".">
-  <property file="${basedir}/build.properties" />
+  <property file="module.properties" />
+  <property file="build.properties" />
 
   <property name="project.dir" value="."/>
   <property name="build.dir" value="${project.dir}/build"/>
   <property name="dist.dir" value="${project.dir}/dist"/>
-  <property name="amp.file" value="${dist.dir}/${module.id}.amp"/>
+  <property name="amp.file" value="${dist.dir}/${module.id}-v${module.version}.amp"/>
   <property name="web.dir" value="${project.dir}/web" />
 
   <path id="yuicompressor.classpath">

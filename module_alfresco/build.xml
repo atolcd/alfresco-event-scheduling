@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <project name="Event scheduling (Repository)" default="prepare-package-amp" basedir=".">
-  <property file="${basedir}/build.properties" />
+  <property file="module.properties" />
+  <property file="build.properties" />
 
   <property name="project.dir" value="." />
   <property name="build.dir" value="${project.dir}/build" />
   <property name="dist.dir" value="${project.dir}/dist" />
-  <property name="amp.file" value="${dist.dir}/${module.id}.amp" />
+  <property name="amp.file" value="${dist.dir}/${module.id}-v${module.version}.amp" />
   <property name="config.dir" value="${project.dir}/config" />
   <property name="source.dir" value="${project.dir}/src" />
   <property name="lib.dir" value="${project.dir}/lib" />
@@ -27,7 +28,7 @@
   <path id="class.path">
     <dirset dir="${build.dir}" />
     <fileset dir="${alfresco.lib.dir}" includes="**/*.jar" />
-    <fileset dir="${lib.dir}" includes="**/*.jar" />
+    <fileset dir="${lib.dir}" includes="**/*.jar" erroronmissingdir="false" />
   </path>
 
   <!-- Compile -->
