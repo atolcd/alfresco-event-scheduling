@@ -1,4 +1,4 @@
-"Event scheduling"  Share dashlet
+"Event scheduling" dashlet for Alfresco Share
 ================================
 
 This extension allows you to plan events (http://www.doodle.com like) directly from a Share dashlet (the dashlet can be added, either on a user or on a site dashboard).  
