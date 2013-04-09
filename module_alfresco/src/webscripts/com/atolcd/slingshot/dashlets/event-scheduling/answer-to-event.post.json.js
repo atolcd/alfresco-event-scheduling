@@ -41,9 +41,15 @@ function main() {
           }
 
           var userName = person.properties.userName,
-              answerType = "user-answer";
+              answerType = "user-answer",
+              responseNode = null;
 
-          var responseNode = dateNode.childByNamePath(userName);
+          var nodes = dateNode.childrenByXPath("./*[@cm:name='" + userName + "']"); // childByNamePath not always works...
+          if (nodes.length > 0) {
+            responseNode = nodes[0];
+            if (nodes.length > 1) { /* WARN: it should not be possible */ }
+          }
+
           if (responseNode && !respStr) {
             // delete response
             answerType = "user-delete-answer";

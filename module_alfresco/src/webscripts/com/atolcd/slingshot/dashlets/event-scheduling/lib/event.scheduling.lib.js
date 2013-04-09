@@ -36,7 +36,14 @@ function sortByLastUpdate(a, b) {
 
 
 function getOrCreateFolder(parent, childName, childTitle, type, assocType) {
-  var node = parent.childByNamePath(childName);
+  var node = null;
+
+  var nodes = parent.childrenByXPath("./*[@cm:name='" + childName + "']"); // childByNamePath not always works...
+  if (nodes.length > 0) {
+    node = nodes[0];
+    if (nodes.length > 1) { /* WARN: it should not be possible */ }
+  }
+
   if (!node) {
     if (type) {
       if (assocType) {
@@ -44,7 +51,6 @@ function getOrCreateFolder(parent, childName, childTitle, type, assocType) {
       } else {
         node = parent.createNode(childName, type);
       }
-
     } else {
       node = parent.createFolder(childName);
     }
@@ -221,12 +227,16 @@ function addDatesToEvent(eventNode, dates) {
       dateFolder.properties["evtsched:date"] = dateDetails.date;
       dateFolder.save();
       for (var i=0, ii=dateDetails.schedules.length ; i<ii ; i++) {
-        var schedule = getOrCreateFolder(dateFolder, dateDetails.schedules[i], dateDetails.schedules[i], "evtsched:eventTime", "evtsched:times");
+        var folderName = replaceCharacters(dateDetails.schedules[i], '_'); // Escape characters
+        var schedule = getOrCreateFolder(dateFolder, folderName, dateDetails.schedules[i], "evtsched:eventTime", "evtsched:times");
       }
     }
   }
 }
 
+function replaceCharacters(str, c) {
+  return (str+'').replace(/([?*\\\/|:])/g, c);
+}
 
 function addAuthoritiesToEvent(eventNode, authorities, visibility, siteId) {
   var currentUser = person.properties.userName;
@@ -273,7 +283,7 @@ function getEventDates(eventNode) {
         var timeNode = scheduleNodes[j];
         datesTab.push({
           date: date,
-          time: timeNode.name,
+          time: timeNode.properties["cm:title"] || timeNode.name, // Node name may have been modified (?, *,\, /, |, :)
           nodeRef: timeNode.nodeRef.toString()
         });
       }

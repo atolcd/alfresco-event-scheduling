@@ -103,7 +103,7 @@ function getDates(eventNode) {
         fields.push(timeNode);
         datesTab[monthId][tabSize - 1].times.push({
           "id": timeNode.id,
-          "label": timeNode.name
+          "label": timeNode.properties["cm:title"] || timeNode.name // Node name may have been modified (?, *,\, /, |, :)
         });
       }
     }
