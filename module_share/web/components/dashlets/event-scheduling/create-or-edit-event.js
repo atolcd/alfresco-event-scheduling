@@ -523,11 +523,11 @@
 
         // Set the correct options for our use
         this.modules.authorityFinder.setOptions({
-          dataWebScript: Alfresco.constants.URL_SERVICECONTEXT + "components/event-scheduling/authority-finder/authority-query" + ((this.options.siteId) ? "?sortBy=shortName&zone=APP.SHARE&site=" + this.options.siteId : ""),
-          authorityType: (this.options.siteId) ? Alfresco.AuthorityFinder.AUTHORITY_TYPE_GROUPS : Alfresco.AuthorityFinder.AUTHORITY_TYPE_ALL,
+          dataWebScript: Alfresco.constants.URL_SERVICECONTEXT + "components/event-scheduling/authority-finder/authority-query?sortBy=sortField" + ((this.options.siteId) ? "&zone=APP.SHARE&site=" + this.options.siteId : "&ignoreGuest=true"),
+          authorityType: Alfresco.AuthorityFinder.AUTHORITY_TYPE_ALL,
           viewMode: Alfresco.AuthorityFinder.VIEW_MODE_COMPACT,
           singleSelectMode: false,
-          minSearchTermLength: 2
+          minSearchTermLength: 1
         });
 
         this.modules.authorityFinder.unsubscribeItemSelectedEvent = function() {

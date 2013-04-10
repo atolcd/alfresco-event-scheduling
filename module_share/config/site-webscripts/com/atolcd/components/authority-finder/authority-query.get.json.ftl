@@ -1,7 +1,7 @@
 <#macro authorityJSON authority>
    <#assign metadata = authority.metadata>
    <#escape x as jsonUtils.encodeJSONString(x)>
-{
+  {
       "authorityType": "${authority.authorityType}",
       "shortName": "${authority.shortName}",
       "fullName": "${authority.fullName}",

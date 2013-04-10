@@ -4,8 +4,21 @@ var MAPPING_TYPE =
    STATIC: 1
 };
 
+var weightings = {
+  "SiteConsumer": 1,
+  "SiteContributor": 2,
+  "SiteCollaborator": 3,
+  "SiteManager": 4,
+  "AllSiteMembers": 5,
+  "EVERYONE": 6
+};
+
 var mapUser = function(data)
 {
+   if (args.ignoreGuest && data.userName == 'guest') {
+      return null;
+   }
+
    return (
    {
       authorityType: "USER",
@@ -13,6 +26,7 @@ var mapUser = function(data)
       fullName: data.userName,
       displayName: (data.firstName ? data.firstName + " " : "") + (data.lastName ? data.lastName : ""),
       description: data.jobtitle ? data.jobtitle : "",
+      sortField: '0-00-' + data.userName,
       metadata:
       {
          avatar: data.avatar || null,
@@ -25,13 +39,13 @@ var mapUser = function(data)
 var mapGroup = function(data)
 {
    var displayName = data.displayName
-       fullName = data.fullName;
+       fullName = data.fullName,
+       weighting = data.weighting || 0;
    if (args.site && args.zone && args.zone == "APP.SHARE") {
-      if (fullName == "GROUP_site_" + args.site) {
-        displayName = msg.get("label.group.AllSiteMembers") + " (" + args.site + ")";
-      } else {
+      if (fullName.indexOf("GROUP_site_" + args.site + "_") == 0) {
         var role = fullName.substr("GROUP_site_".length + args.site.length + 1);
         displayName = msg.get("label.group." + role) + " (" + args.site + ")";
+        weighting = weightings[role];
       }
    }
 
@@ -41,7 +55,8 @@ var mapGroup = function(data)
       shortName: data.shortName,
       fullName: fullName,
       displayName: displayName,
-      description: data.fullName,
+      description: fullName,
+      sortField: weighting + '-01-' + data.shortName,
       metadata:
       {
       }
@@ -55,10 +70,15 @@ var getMappings = function()
 
    if (authorityType === "all" || authorityType == "user")
    {
+      var url = "/api/people?filter=" + encodeURIComponent(args.filter);
+      if (args.site && args.zone && args.zone == "APP.SHARE") {
+        url = "/atolcd/api/sites/" + args.site + "/memberships?authorityType=USER&nf=" + encodeURIComponent(args.filter);
+      }
+
       mappings.push(
       {
          type: MAPPING_TYPE.API,
-         url: "/api/people?filter=" + encodeURIComponent(args.filter),
+         url: url,
          rootObject: "people",
          fn: mapUser
       });
@@ -66,12 +86,12 @@ var getMappings = function()
 
    if (authorityType === "all" || authorityType === "group")
    {
-      var filter = encodeURIComponent(args.filter);
+      var filter = args.filter;
       if (args.site && args.zone && args.zone == "APP.SHARE") {
-        filter = "site_" + encodeURIComponent(args.site);
+        filter = "site_" + args.site + "_";
       }
 
-      var url = "/api/groups?shortNameFilter=" + filter;
+      var url = "/api/groups?shortNameFilter=" + encodeURIComponent(filter);
       if (args.zone !== "all")
       {
          url += "&zone=" + encodeURIComponent(args.zone === null ? "APP.DEFAULT" : args.zone);
@@ -85,6 +105,17 @@ var getMappings = function()
          fn: mapGroup
       });
 
+      // Find groups in the site
+      if (args.site && args.zone && args.zone == "APP.SHARE") {
+        mappings.push(
+        {
+           type: MAPPING_TYPE.API,
+           url: "/atolcd/api/sites/" + args.site + "/memberships?authorityType=GROUP&nf=" + encodeURIComponent(args.filter),
+           rootObject: "groups",
+           fn: mapGroup
+        });
+      }
+
       if (args.everyone) {
         mappings.push(
         {
@@ -94,7 +125,24 @@ var getMappings = function()
                  shortName: "EVERYONE",
                  fullName: "GROUP_EVERYONE",
                  displayName: msg.get("group.everyone"),
-                 description: "GROUP_EVERYONE"
+                 description: "GROUP_EVERYONE",
+                 weighting: weightings["EVERYONE"]
+              }
+           ],
+           fn: mapGroup
+        });
+      }
+      if (args.site && args.zone && args.zone == "APP.SHARE") {
+        mappings.push(
+        {
+           type: MAPPING_TYPE.STATIC,
+           data: [
+              {
+                 shortName: "site_" + args.site,
+                 fullName: "GROUP_site_" + args.site,
+                 displayName: msg.get("label.group.AllSiteMembers") + " (" + args.site + ")",
+                 description: "GROUP_site_" + args.site,
+                 weighting: weightings["AllSiteMembers"]
               }
            ],
            fn: mapGroup
@@ -122,7 +170,10 @@ function main()
             data = eval('(' + result + ')');
             for (j = 0, jj = data[mapping.rootObject].length; j < jj; j++)
             {
-               authorities.push(mapping.fn.call(this, data[mapping.rootObject][j]));
+               var auth = mapping.fn.call(this, data[mapping.rootObject][j]);
+               if (auth) {
+                authorities.push(auth);
+               }
             }
          }
       }

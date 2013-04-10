@@ -10,7 +10,7 @@
   <property name="config.dir" value="${project.dir}/config" />
   <property name="source.dir" value="${project.dir}/src" />
   <property name="lib.dir" value="${project.dir}/lib" />
-  <property name="jar.file" value="${build.dir}/${module.id}.jar" />
+  <property name="jar.file" value="${build.dir}/${module.id}-${module.version}.jar" />
 
   <!-- Make Dirs -->
   <target name="mkdirs" depends="clean">
