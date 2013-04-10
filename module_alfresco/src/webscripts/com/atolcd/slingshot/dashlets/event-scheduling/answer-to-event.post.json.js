@@ -73,7 +73,7 @@ function main() {
           if (dateNode.typeShort == "evtsched:eventDate") {
             addHistoryItem(eventNode, userName, answerType, dateNode.properties["evtsched:date"]);
           } else if (dateNode.typeShort == "evtsched:eventTime") {
-            addHistoryItem(eventNode, userName, answerType, dateNode.parent.properties["evtsched:date"], dateNode.name);
+            addHistoryItem(eventNode, userName, answerType, dateNode.parent.properties["evtsched:date"], dateNode.properties["cm:title"] || dateNode.name);
           }
 
           // update 'last update' property
