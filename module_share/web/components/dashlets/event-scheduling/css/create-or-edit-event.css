@@ -19,8 +19,23 @@
 
 
 /* Create/Edit dialog */
+.create-event-dialog .yui-g .yui-gd {
+  float: left;
+  width: 40em;
+}
+.create-event-dialog .yui-g .yui-gd.date {
+  width: 30em;
+}
+
 .create-event-dialog .fields-container {
-  padding: 1em 2em;
+  float: left;
+  padding: 1em 1em 1em 2em;
+  width: 43em;
+}
+
+.create-event-dialog .right-pan {
+  float: right;
+  width: 40em;
 }
 
 .create-event-dialog label {
@@ -45,15 +60,22 @@
   padding-left: 10px;
 }
 
-.create-event-dialog .add-date {
+.create-event-dialog .add-date, .create-event-dialog .add-user-group {
   float: right;
+}
+
+.create-event-dialog .removeIcon {
+  background: url("../images/icons/remove-icon-16.png") no-repeat scroll center center transparent;
+  margin-left: 4px;
+  padding: 8px;
 }
 
 
 /* Authority Finder */
 .create-event-dialog .authority {
-  display: inline;
+  display: inline-block;
   margin-right: 1em;
+  padding-bottom: 2px;
   padding-left: 1.5em;
   padding-top: 2px;
 }
@@ -66,14 +88,11 @@
 
 .create-event-dialog .authority-finder-container {
   display: none;
-  position: absolute;
-  z-index: 100;
-  min-width: 30em;
-  *width: 30em;
+  width: 35em;
 }
 
 .create-event-dialog .authority-finder.compact .results {
-  min-height: 215px;
+  min-height: 400px;
 }
 
 .create-event-dialog .authority-finder-container .authority-finder {

@@ -34,44 +34,51 @@
   <div class="hd"><#if viewMode>${msg("label.header.view")}<#elseif editMode>${msg("label.header.edit")}<#else>${msg("label.header.create")}</#if></div>
   <div class="bd">
     <form id="${el}-form" action="" method="POST">
-      <div id="${el}-fields" class="fields-container">
-        <input type="hidden" name="mode" value="${mode}" />
-        <input type="hidden" name="nodeRef" value="${args.nodeRef!""}" />
-        <#if inSite>
-          <#assign visibility = "private" />
-          <input type="hidden" name="siteId" value="${siteId!""}" />
-        </#if>
-        <div class="yui-gd">
-          <label for="${el}-title">${msg("label.event.title")}:&nbsp;*</label>
-          <input type="text" id="${el}-title" name="title" tabindex="${getTabIndex()}" class="hasTabIndex" size="80" value="${(eventInfo.title!"")?html}" <#if viewMode> readonly="readonly"</#if> />
-        </div>
-        <div class="yui-gd">
-          <label for="${el}-place">${msg("label.event.place")}:</label>
-          <input type="text" id="${el}-place" name="place" tabindex="${getTabIndex()}" class="hasTabIndex" size="80" value="${(eventInfo.place!"")?html}" <#if viewMode> readonly="readonly"</#if> />
-        </div>
-        <div class="yui-gd">
-          <label for="${el}-description">${msg("label.event.description")}:</label>
-          <textarea id="${el}-description" name="description" tabindex="${getTabIndex()}" class="hasTabIndex" rows="2" cols="60" <#if viewMode> readonly="readonly"</#if>>${(eventInfo.description!"")?html}</textarea>
-        </div>
-        <div class="yui-gd">
-          <label for="${el}-validityDate" class="inline-label">${msg("label.event.validity")}:</label>
-          <span id="${el}-container-validityDate">
-            <input id="${el}-validityDate" type="text" name="validityDate" readonly="readonly" value="<#if eventInfo.validityDate?? && eventInfo.validityDate?has_content>${eventInfo.validityDate.displayDate}</#if>" title="" class="datepicker-date" />
-            <input id="${el}-validityDate-iso" type="hidden" name="validityDate-iso" value="<#if eventInfo.validityDate?? && eventInfo.validityDate?has_content>${eventInfo.validityDate.isoDate}</#if>" />
-          </span>
-        </div>
-        <div class="yui-gd">
-          <label for="${el}-visibility">${msg("label.visibility")}:</label>
-          <select id="${el}-visibility" name="visibility" tabindex="${getTabIndex(1)}" class="hasTabIndex" <#if viewMode || editMode || inSite> disabled="disabled"</#if>>
-            <option value="public" <#if visibility == "public">selected="selected"</#if>>${msg("label.public")}</option>
-            <option value="private" <#if visibility == "private">selected="selected"</#if>>${msg("label.private")}</option>
-          </select>
-        </div>
-
-        <fieldset id="${el}-private-options" class="yui-gd <#if visibility != "private">hidden</#if>">
-          <legend>${msg("label.private-options")}:</legend>
+      <div class="yui-g">
+        <div id="${el}-fields" class="fields-container left-pan">
+          <input type="hidden" name="mode" value="${mode}" />
+          <input type="hidden" name="nodeRef" value="${args.nodeRef!""}" />
+          <#if inSite>
+            <#assign visibility = "private" />
+            <input type="hidden" name="siteId" value="${siteId!""}" />
+          </#if>
           <div class="yui-gd">
-            <label>${msg("label.authorities")}:&nbsp;*</label>
+            <label for="${el}-title">${msg("label.event.title")}:&nbsp;*</label>
+            <input type="text" id="${el}-title" name="title" tabindex="${getTabIndex()}" class="hasTabIndex" size="80" value="${(eventInfo.title!"")?html}" <#if viewMode> readonly="readonly"</#if> />
+          </div>
+          <div class="yui-gd">
+            <label for="${el}-place">${msg("label.event.place")}:</label>
+            <input type="text" id="${el}-place" name="place" tabindex="${getTabIndex()}" class="hasTabIndex" size="80" value="${(eventInfo.place!"")?html}" <#if viewMode> readonly="readonly"</#if> />
+          </div>
+          <div class="yui-gd">
+            <label for="${el}-description">${msg("label.event.description")}:</label>
+            <textarea id="${el}-description" name="description" tabindex="${getTabIndex()}" class="hasTabIndex" rows="2" cols="60" <#if viewMode> readonly="readonly"</#if>>${(eventInfo.description!"")?html}</textarea>
+          </div>
+          <div class="yui-gd">
+            <label for="${el}-validityDate" class="inline-label">${msg("label.event.validity")}:</label>
+            <span id="${el}-container-validityDate">
+              <input id="${el}-validityDate" type="text" name="validityDate" readonly="readonly" value="<#if eventInfo.validityDate?? && eventInfo.validityDate?has_content>${eventInfo.validityDate.displayDate}</#if>" title="" class="datepicker-date" />
+              <input id="${el}-validityDate-iso" type="hidden" name="validityDate-iso" value="<#if eventInfo.validityDate?? && eventInfo.validityDate?has_content>${eventInfo.validityDate.isoDate}</#if>" />
+            </span>
+          </div>
+          <div class="yui-gd">
+            <label for="${el}-visibility">${msg("label.visibility")}:</label>
+            <select id="${el}-visibility" name="visibility" tabindex="${getTabIndex(1)}" class="hasTabIndex" <#if viewMode || editMode || inSite> disabled="disabled"</#if>>
+              <option value="public" <#if visibility == "public">selected="selected"</#if>>${msg("label.public")}</option>
+              <option value="private" <#if visibility == "private">selected="selected"</#if>>${msg("label.private")}</option>
+            </select>
+          </div>
+
+          <fieldset id="${el}-private-options" class="yui-gd <#if visibility != "private">hidden</#if>">
+            <span id="${el}-addUserGroupButton" class="add-user-group yui-button yui-push-button">
+               <span class="first-child">
+                  <button tabindex="${getTabIndex()}" class="hasTabIndex">${msg("button.add-user-group")}</button>
+               </span>
+            </span>
+            <legend>${msg("label.private-options")}:</legend>
+            <div>
+              <label>${msg("label.authorities")}:&nbsp;*</label>
+            </div>
 
             <#assign authorities = "" />
             <div class="yui-gd">
@@ -90,37 +97,31 @@
               <input type="hidden" id="${el}-authorities" name="authorities" value="${authorities}" />
             </div>
 
-            <div class="add-user-group">
-              <span id="${el}-addUserGroupButton" class="iconAddUserGroupButton yui-button yui-push-button">
-                 <span class="first-child">
-                    <button tabindex="${getTabIndex()}" class="hasTabIndex">${msg("button.add-user-group")}</button>
-                 </span>
-              </span>
+            <div class="yui-gd">
+              <label for="${el}-mail-notification" class="inline-label">${msg("label.mail-notification")}:</label>
+              <input type="checkbox" id="${el}-mail-notification" name="mail-notification" tabindex="${getTabIndex()}" class="hasTabIndex" <#if viewMode || editMode> disabled="disabled"<#elseif createMode> checked="checked"</#if>/>
             </div>
-            <div id="${el}-authorityFinder" class="authority-finder-container"></div>
-          </div>
+          </fieldset>
 
-          <div class="yui-gd">
-            <label for="${el}-mail-notification" class="inline-label">${msg("label.mail-notification")}:</label>
-            <input type="checkbox" id="${el}-mail-notification" name="mail-notification" tabindex="${getTabIndex()}" class="hasTabIndex" <#if viewMode || editMode> disabled="disabled"<#elseif createMode> checked="checked"</#if>/>
-          </div>
-        </fieldset>
-
-        <fieldset id="${el}-dates-container" class="dates-container yui-gd">
-          <legend>${msg("label.dates")}:</legend>
-          <span id="${el}-add-date" class="yui-button yui-push-button add-date">
-             <span class="first-child">
-                <button tabindex="${getTabIndex()}" class="hasTabIndex">${msg("button.add-date")}</button>
-             </span>
-          </span>
-          <#if eventInfo.dates?exists && eventInfo.dates?size &gt; 0>
-            <#list eventInfo.dates as d>
-              <@renderDatePicker d_index d viewMode />
-            </#list>
-          <#else>
-            <@renderDatePicker 0 "" viewMode />
-          </#if>
-        </fieldset>
+          <fieldset id="${el}-dates-container" class="dates-container yui-gd">
+            <legend>${msg("label.dates")}:</legend>
+            <span id="${el}-add-date" class="yui-button yui-push-button add-date">
+               <span class="first-child">
+                  <button tabindex="${getTabIndex()}" class="hasTabIndex">${msg("button.add-date")}</button>
+               </span>
+            </span>
+            <#if eventInfo.dates?exists && eventInfo.dates?size &gt; 0>
+              <#list eventInfo.dates as d>
+                <@renderDatePicker d_index d viewMode />
+              </#list>
+            <#else>
+              <@renderDatePicker 0 "" viewMode />
+            </#if>
+          </fieldset>
+        </div>
+        <div class="right-pan">
+          <div id="${el}-authorityFinder" class="authority-finder-container"></div>
+        </div>
       </div>
       <div class="separator">&nbsp;</div>
       <div class="bdft <#if viewMode>hidden</#if>">

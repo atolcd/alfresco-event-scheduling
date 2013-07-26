@@ -40,6 +40,10 @@
   var $html = Alfresco.util.encodeHTML,
       $combine = Alfresco.util.combinePaths;
 
+  // Constants
+  var CREATE_OR_EDIT_EVENT_DIALOG_WIDTH_EM = 46,
+      AUTHORITY_FINDER_PANEL_WIDTH_EM = 40;
+
   /**
    * Dashboard CreateOrEditEvent constructor.
    *
@@ -55,7 +59,6 @@
 
     // Authority listener
     YAHOO.Bubbling.subscribe("itemSelected", this.onAuthoritySelected, this);
-    this.authorities = {};
 
     this.init();
     return this;
@@ -153,6 +156,20 @@
             this.addDatePicker("date0", false, this._getNewTabIndex() - 1);
           }
         }
+
+        // Hook action events
+        var me = this;
+        var fnActionHandler = function fnActionHandler(layer, args) {
+          var owner = YAHOO.Bubbling.getOwnerByTagName(args[1].anchor, "span");
+          if (owner !== null) {
+            if (typeof me[owner.className] == "function") {
+              args[1].stop = true;
+              me[owner.className].call(me, owner.getAttribute('name'), owner);
+            }
+          }
+          return true;
+        };
+        YAHOO.Bubbling.addDefaultAction("remove-item-link", fnActionHandler, true);
       };
 
       var doSetupFormsValidation = function(p_form) {
@@ -169,10 +186,8 @@
       };
 
       this.eventDialog = new Alfresco.module.SimpleDialog(this.id).setOptions({
-        width: "50em",
+        width: CREATE_OR_EDIT_EVENT_DIALOG_WIDTH_EM + "em",
         actionUrl: Alfresco.constants.PROXY_URI + "slingshot/dashlets/schedule-event",
-        // requestContentType : "application/json",
-        // responseContentType : "application/json",
         templateUrl: Alfresco.constants.URL_SERVICECONTEXT + "modules/event-scheduling/schedule-event?submitType=json",
         destroyOnHide: true,
         firstFocus: this.id + "-title",
@@ -494,10 +509,13 @@
       button.set("label", button.get("checked") ? this.msg('button.hide') : this.msg('button.add-user-group'));
 
       if (!this.showingAuthorityFinder) {
+        this.eventDialog.dialog.cfg.setProperty("width", (CREATE_OR_EDIT_EVENT_DIALOG_WIDTH_EM + AUTHORITY_FINDER_PANEL_WIDTH_EM) + "em");
+
         Dom.addClass(this.widgets.authorityFinder, "active");
         Dom.get(this.id + "-authorityFinder-search-text").focus();
         this.showingAuthorityFinder = true;
       } else {
+        this.eventDialog.dialog.cfg.setProperty("width", CREATE_OR_EDIT_EVENT_DIALOG_WIDTH_EM + "em");
         Dom.removeClass(this.widgets.authorityFinder, "active");
         this.showingAuthorityFinder = false;
       }
@@ -564,32 +582,72 @@
     onAuthoritySelected: function CreateOrEditEventScheduling_onAuthoritySelected(e, args) {
       // Construct permission descriptor and add permission row.
       var authorityName = args[1].itemName;
-      if (!this.authorities[authorityName]) {
-        var isGrp = (authorityName.toUpperCase().indexOf("GROUP_") != -1);
-
-        this.authorities[authorityName] = {
-          name: authorityName, // Example: "GROUP_site_test_SiteCollaborator"
-          displayName: args[1].displayName,
-          iconUrl: args[1].iconUrl,
-          group: isGrp
-        };
-
+      if (!this.modules.authorityFinder.selectedItems[authorityName]) {
+        // Authority selected DOM element
         var authorityEl = document.createElement("div");
-        Dom.addClass(authorityEl, "authority " + (isGrp ? "group" : "user"));
+        authorityEl.setAttribute('id', this.id + '-' + authorityName);
+        Dom.addClass(authorityEl, "authority " + ((authorityName.toUpperCase().indexOf("GROUP_") != -1) ? "group" : "user"));
         authorityEl.innerHTML = args[1].displayName;
+
+        // Remove authority DOM element
+        var removeAuthorityEl = document.createElement("span");
+        removeAuthorityEl.setAttribute('class', 'onAuthorityRemoved');
+        removeAuthorityEl.setAttribute('name', authorityName);
+        removeAuthorityEl.innerHTML = '<a title="' + this.msg('button.remove') + '" class="remove-item-link" href="#"><span class="removeIcon">&nbsp;</span></a>';
+
+        authorityEl.appendChild(removeAuthorityEl);
         Dom.get(this.id + "-authorities-selected").appendChild(authorityEl);
 
-        // TODO: -authorities-added, -authorities-removed?
-        var authoritiesInput = Dom.get(this.id + "-authorities");
-        if (authoritiesInput) {
-          var currVal = authoritiesInput.value;
-          Dom.get(this.id + "-authorities").value = (currVal == "") ? authorityName : currVal + ',' + authorityName;
+        // Update input
+        this.updateAuthoritiesSelectedInput(authorityName, true);
 
-          // Simulate "keypress" event
-          YAHOO.util.UserAction.keypress(authoritiesInput);
+      } else { /* already selected */ }
+    },
+
+    onAuthorityRemoved: function CreateOrEditEventScheduling_onAuthorityRemoved(authorityId, args) {
+      if (this.modules.authorityFinder.selectedItems[authorityId]) {
+        // Delete DIV element
+        var authoritiesSelectedDiv = Dom.get(this.id + "-authorities-selected");
+        if (authoritiesSelectedDiv) {
+          var authorityDiv = Dom.get(this.id + '-' + authorityId);
+          if (authorityDiv) {
+            authoritiesSelectedDiv.removeChild(authorityDiv);
+          }
         }
 
-      } else { /* Déjà selectionné */ }
+        // Update INPUT
+        this.updateAuthoritiesSelectedInput(authorityId, false);
+
+        // Update the 'authorityFinder'
+        delete this.modules.authorityFinder.selectedItems[authorityId];
+        if (this.modules.authorityFinder.itemSelectButtons[authorityId]) {
+          this.modules.authorityFinder.itemSelectButtons[authorityId].set("disabled", false);
+        }
+      }
+    },
+
+    updateAuthoritiesSelectedInput: function CreateOrEditEventScheduling_updateAuthoritiesSelectedInput(authorityName, add) {
+      // TODO: -authorities-added, -authorities-removed?
+      var authoritiesInput = Dom.get(this.id + "-authorities");
+      if (authoritiesInput) {
+        var values = [],
+            currVal = authoritiesInput.value;
+
+        if (currVal != "") {
+          values = authoritiesInput.value.split(',');
+        }
+
+        if (add == true) {
+          values.push(authorityName);
+        } else {
+          values = Alfresco.util.arrayRemove(values, authorityName);
+        }
+
+        Dom.get(this.id + "-authorities").value = values.join(',');
+
+        // Simulate "keypress" event
+        YAHOO.util.UserAction.keypress(authoritiesInput);
+      }
     },
 
     /** Private functions **/
