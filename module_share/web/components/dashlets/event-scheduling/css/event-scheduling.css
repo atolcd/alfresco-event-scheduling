@@ -21,6 +21,12 @@
   padding: 0;
 }
 
+.dashlet.dashlet-events .titleBarActions {
+  display: inline !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 /* Footer */
 .dashlet-events .footer {
   background-color: #F6F6F6;
