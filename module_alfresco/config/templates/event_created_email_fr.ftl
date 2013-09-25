@@ -51,7 +51,7 @@
                                              <p>${document.properties["cm:description"]!""}<p>
                                              </#if>
 
-                                             Donnez dès maintenant vos disponibilités directement depuis <a href="${shareUrl}/page/answer-event?nodeRef=${document.nodeRef}">cette page</a> ou depuis <a href="${shareUrl}/page/user/${recipient}/dashboard">votre tableau de board</a>&nbsp;*<#if siteId?has_content> ou depuis le <a href="${shareUrl}/page/site/${siteId}/dashboard">tableau de board du site</a></#if>.
+                                             Donnez dès maintenant vos disponibilités directement depuis <a href="${shareUrl}/page/answer-event?nodeRef=${document.nodeRef}">cette page</a> ou depuis <a href="${shareUrl}/page/user/${recipient}/dashboard">votre tableau de bord</a>&nbsp;*<#if siteId?has_content> ou depuis le <a href="${shareUrl}/page/site/${siteId}/dashboard">tableau de bord du site</a></#if>.
 
                                              <p>Les dates proposées sont :</p>
                                              <#assign dates = document.childAssocs["evtsched:dates"]!"" />
