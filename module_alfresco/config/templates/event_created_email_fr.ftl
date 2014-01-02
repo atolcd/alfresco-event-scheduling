@@ -62,7 +62,7 @@
                                                   <#assign scheduleNodes = dateNode.childAssocs["evtsched:times"]!"" />
                                                   <#if scheduleNodes?? && scheduleNodes?has_content>
                                                     <#list scheduleNodes as timeNode>
-                                                      <li>${date?date?string.full?capitalize}, ${timeNode.name}</li>
+                                                      <li>${date?date?string.full?capitalize}, ${timeNode.properties["cm:title"]!timeNode.name}</li>
                                                     </#list>
                                                   <#else>
                                                     <li>${date?date?string.full?capitalize}</li>
