@@ -183,6 +183,10 @@ function main() {
     eventNode.properties["evtsched:lastUpdate"] = now;
     eventNode.save();
 
+    // Known issue: "cm:versionable" aspect may be a problem
+    if (eventNode.hasAspect("cm:versionable")) {
+      eventNode.removeAspect("cm:versionable");
+    }
 
     /** PERMISSIONS **/
     eventNode.setInheritsPermissions(false);

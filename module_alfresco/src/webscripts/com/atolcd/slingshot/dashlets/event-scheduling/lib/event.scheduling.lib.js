@@ -90,6 +90,11 @@ function getOrCreateSiteContainer(siteId, containerId) {
 function updateLastEventActivity(eventNode, date) {
   // update 'last update' property
   eventSchedulingUtils.runAsSystem(function(){
+    // Known issue: "cm:versionable" aspect may be a problem
+    if (eventNode.hasAspect("cm:versionable")) {
+      eventNode.removeAspect("cm:versionable");
+    }
+
     eventNode.properties["evtsched:lastUpdate"] = date;
     eventNode.save();
   });
@@ -110,6 +115,11 @@ function addHistoryItem(eventNode, userName, eventType, eventDate, eventTime) {
       }
 
       historyRootNode.createNode('historyItem-' + userName + '-' + new Date().getTime(), 'evtsched:historyItem', props);
+
+      // Known issue: "cm:versionable" aspect may be a problem
+      if (historyRootNode.hasAspect("cm:versionable")) {
+        historyRootNode.removeAspect("cm:versionable");
+      }
     }
   });
 }
