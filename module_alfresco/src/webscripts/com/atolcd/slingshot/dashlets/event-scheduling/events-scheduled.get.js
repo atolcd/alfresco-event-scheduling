@@ -33,7 +33,7 @@ function main() {
   var siteId = url.templateArgs.site;
   if (siteId) {
     // site only
-    var sitePath = SITES_SPACE_QNAME_PATH + 'cm:' + siteId + '/cm:' + EVENTS_SITE_CONTAINER + '//*';
+    var sitePath = SITES_SPACE_QNAME_PATH + 'cm:' + search.ISO9075Encode(siteId) + '/cm:' + EVENTS_SITE_CONTAINER + '//*';
     query += ' AND PATH:"' + sitePath + '"';
   }
   else if (pathFilter == "mySites") {
