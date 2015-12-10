@@ -2,7 +2,7 @@
 ================================
 
 This extension allows you to plan events (http://www.doodle.com like) directly from a Share dashlet (the dashlet can be added, either on a user or on a site dashboard).  
-Works with: Alfresco **Community** & **Enterprise** 4.x.x
+Works with: Alfresco **Community** & **Enterprise** 4.x.x / 5.0.x
 
 
 Building the module
