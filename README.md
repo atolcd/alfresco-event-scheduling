@@ -33,13 +33,26 @@ This extension is a standard Alfresco Module, so experienced users can skip thes
 **Caution:** please ensure you do not have unsaved custom files in the webapp folders before deleting.
 4. Start Alfresco
 
+#### Configuration
+You may set which site roles can create events in a site. By default it is only allowed by SiteManagers.
+
+Configure more site roles by adding the *EventScheduling* section to `share-config-custom.xml` (http://docs.alfresco.com/community5.0/tasks/share-customizing-custom-config-file.html)
+
+        <config evaluator="string-compare" condition="EventScheduling">
+        	<groups>
+        		<group>SiteManager</group>
+        		<group>SiteCollaborator</group>
+        		<group>SiteContributor</group>
+        	</groups>
+        </config>
+
 
 Using the module
 ---------------------
 Add the dashlet on your (site/user) dashboard.
 
 #### Who can plan events?
- - In a site, only managers can schedule events
+ - In a site, by default only managers can schedule events (configurable)
  - From the user dashlet, only administrators and members of the "Event Planners" group (GROUP_EVENT_SCHEDULED_CREATORS) can plan an event.
 
 *The "Event Planners" group is created during the bootstrap of the module, by default, it does not contains any user. You are free to decide who will be able to create events.*
