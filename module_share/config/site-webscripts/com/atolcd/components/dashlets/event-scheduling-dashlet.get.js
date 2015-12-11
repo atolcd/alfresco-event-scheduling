@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Atol Conseils et Développements.
+ * Copyright (C) 2012 Atol Conseils et Dï¿½veloppements.
  * http://www.atolcd.com/
  * Author: Bertrand FOREST
  *
@@ -18,6 +18,8 @@
  */
 
 var PREFERENCES_ROOT = "com.atolcd.share.dashlet.eventScheduling";
+
+var EventSchedulingDefaultGroups = [ "SiteManager" ];
 
 // Load different preference if we are on a site
 if (page.url.templateArgs.site) {
@@ -42,15 +44,36 @@ function main() {
   }
   model.preferences = preferences;
 
-
   if (page.url.templateArgs.site) {
     // We are in the context of a site, so call the repository to see if the user is site manager or not
     var json = remote.call("/api/sites/" + page.url.templateArgs.site + "/memberships/" + encodeURIComponent(user.name));
     if (json.status == 200) {
       var obj = eval('(' + json + ')');
       if (obj) {
-        canCreateEvent = (obj.role == "SiteManager");
-      }
+    	  var groups;
+    	  if(config.scoped["EventScheduling"] && config.scoped["EventScheduling"].groups) {
+             if (logger.isLoggingEnabled())
+             {
+                logger.log('EventScheduling: loading configuration from share-config');
+             }             
+             groups = config.scoped["EventScheduling"].groups.getChildren("group");
+          } else {
+        	  if (logger.isLoggingEnabled())
+              {
+                 logger.log('EventScheduling: loading default configuration');
+              }
+        	  groups = EventSchedulingDefaultGroups
+          } 
+    	  if (groups) {
+	    	  for (var j = 0; j < groups.size(); j++)
+	          {
+	          	if(String(groups.get(j).getValue()) === String(obj.role)) {
+	          		canCreateEvent = true;
+	          		break;
+	          	}	              
+	          }
+	      }
+       }
     }
   }
   else if (user.isAdmin) {

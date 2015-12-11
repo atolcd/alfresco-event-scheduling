@@ -32,6 +32,7 @@
   <!-- Make Dirs -->
   <target name="mkdirs" depends="clean">
     <mkdir dir="${build.dir}" />
+  	<mkdir dir="${build.dir}/lib" />
     <mkdir dir="${dist.dir}" />
   </target>
 
@@ -68,7 +69,8 @@
   <!-- Config (Webscripts, Site data, Messages, ...)  -->
   <target name="add-config-to-package-amp">
     <zip destfile="${amp.file}" update="true">
-      <zipfileset dir="${project.dir}/config" prefix="WEB-INF/classes/alfresco" />
+      <zipfileset dir="${project.dir}/config" prefix="config/alfresco" />
+      <zipfileset dir="${build.dir}/lib" prefix="lib" />
     </zip>
   </target>
 </project>
