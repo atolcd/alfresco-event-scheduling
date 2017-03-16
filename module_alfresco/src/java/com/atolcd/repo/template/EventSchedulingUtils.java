@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Atol Conseils et Développements.
+ * Copyright (C) 2012 Atol Conseils et Developpements.
  * http://www.atolcd.com/
  * Author: Bertrand FOREST
  *
@@ -28,6 +28,7 @@ import org.alfresco.service.cmr.site.SiteService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.extensions.surf.util.I18NUtil;
 import org.springframework.util.Assert;
+import org.alfresco.service.cmr.site.SiteInfo;
 
 public class EventSchedulingUtils extends BaseTemplateProcessorExtension implements InitializingBean {
 	private NodeService nodeService;
@@ -61,7 +62,11 @@ public class EventSchedulingUtils extends BaseTemplateProcessorExtension impleme
 	}
 
 	public String getSiteTitle(String shortName) {
-		return siteService.getSite(shortName).getTitle();
+		if(shortName == null) {
+			return null;
+		}
+		SiteInfo siteInfo = siteService.getSite(shortName);
+		return siteInfo != null ? siteInfo.getTitle() : null;
 	}
 
 	public String getPersonFullName(String username) {
