@@ -62,7 +62,7 @@ public class EventSchedulingUtils extends BaseTemplateProcessorExtension impleme
 	}
 
 	public String getSiteTitle(String shortName) {
-		if(shortName == null) {
+		if(shortName == null || shortName.isEmpty()) {
 			return null;
 		}
 		SiteInfo siteInfo = siteService.getSite(shortName);
