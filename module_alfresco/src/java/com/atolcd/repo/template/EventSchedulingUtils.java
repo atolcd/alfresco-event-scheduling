@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Atol Conseils et Developpements.
+ * Copyright (C) 2012 Atol Conseils et Développements.
  * http://www.atolcd.com/
  * Author: Bertrand FOREST
  *
