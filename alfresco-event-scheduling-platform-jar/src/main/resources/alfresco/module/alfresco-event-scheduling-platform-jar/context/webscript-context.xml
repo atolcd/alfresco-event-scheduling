@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<beans>
+    <!-- Webscript -->
+    <!-- Lists the membership of a site -->
+    <bean id="webscript.com.atolcd.repository.site.memberships.get" class="org.alfresco.repo.web.scripts.site.SiteMembershipsGet" parent="abstractSiteWebScript">
+      <property name="personService" ref="PersonService"/>
+      <property name="scriptAuthorityService" ref="authorityServiceScript"/>
+    </bean>
+</beans>

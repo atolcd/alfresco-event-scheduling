@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<beans>
+
+    <!-- JavaScript API -->
+    <bean id="event.scheduling.utils.script" parent="baseJavaScriptExtension" class="com.atolcd.repo.jscript.EventSchedulingUtils">
+      <property name="extensionName">
+        <value>eventSchedulingUtils</value>
+      </property>
+    </bean>
+
+    <!-- Template API -->
+    <bean id="event.scheduling.utils.template" parent="baseTemplateImplementation" class="com.atolcd.repo.template.EventSchedulingUtils">
+      <property name="extensionName">
+        <value>eventSchedulingUtils</value>
+      </property>
+      <property name="nodeService">
+        <ref bean="NodeService" />
+      </property>
+      <property name="personService">
+        <ref bean="personService" />
+      </property>
+      <property name="siteService">
+        <ref bean="SiteService" />
+      </property>
+    </bean>
+
+</beans>

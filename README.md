@@ -2,21 +2,20 @@
 ================================
 
 This extension allows you to plan events (http://www.doodle.com like) directly from a Share dashlet (the dashlet can be added, either on a user or on a site dashboard).  
-Works with: Alfresco **Community** & **Enterprise** 4.x.x / 5.0.x
+Works with: Alfresco **Community** & **Enterprise** 4.2.x / 5.0.x / 5.1.x / 5.2.x
 
 
 Building the module
 -------------------
-Check out the project if you have not already done so 
+Check out the project if you have not already done so
 
         git clone git://github.com/atolcd/alfresco-event-scheduling.git
 
-An Ant build script is provided to build AMP files containing the custom files.  
-Before building, ensure you have edited the `build.properties` file to set the path to your Alfresco SDK.  
+This project uses the Alfresco Maven SDK. It will produce a platform AMP and a Share AMP.  
 
 To build AMP files, run the following command from the base project directory:
 
-        ant dist-amp
+        mvn install
 
 
 Installing the module
@@ -58,7 +57,7 @@ Add the dashlet on your (site/user) dashboard.
 *The "Event Planners" group is created during the bootstrap of the module, by default, it does not contains any user. You are free to decide who will be able to create events.*
 
 #### Events
-Events can be: 
+Events can be:
  - **private** : restricted to a limited number of users (groups/users picker)
  - **public** : all users can view these events and give their availabilities
 
