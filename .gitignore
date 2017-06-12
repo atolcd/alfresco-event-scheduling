@@ -1,2 +1,9 @@
 dist
 build
+alf_data_dev
+*.log
+alfresco-event-scheduling-platform-jar/target
+alfresco-event-scheduling-share-jar/target
+integration-tests/target
+target
+.idea

@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<beans>
+    <!-- Model -->
+    <bean id="event.scheduling.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
+      <property name="models">
+        <list>
+          <value>alfresco/module/${project.artifactId}/model/event-scheduling-model.xml</value>
+        </list>
+      </property>
+      <property name="labels">
+        <list>
+          <value>alfresco/module/${project.artifactId}/model/event-scheduling-model</value>
+        </list>
+      </property>
+    </bean>
+
+    <!-- i18n -->
+    <bean id="event.scheduling.resourceBundles" class="org.alfresco.i18n.ResourceBundleBootstrapComponent">
+      <property name="resourceBundles">
+        <list>
+          <value>alfresco.module.alfresco-event-scheduling-platform-jar.messages.event-scheduling</value>
+        </list>
+      </property>
+    </bean>
+
+    <!-- Bootstrap -->
+    <bean id="event.scheduling.spaces.system.bootstrap" class="org.alfresco.repo.module.ImporterModuleComponent" parent="module.baseComponent">
+      <property name="moduleId" value="event-scheduling-alfresco" />
+      <property name="name" value="Event scheduling" />
+      <property name="description" value="Event scheduling initial structure requirements." />
+      <property name="executeOnceOnly" value="true" />
+      <property name="importer" ref="spacesBootstrap" />
+      <property name="bootstrapView">
+          <props>
+            <prop key="path">/${spaces.company_home.childname}/${spaces.dictionary.childname}</prop>
+            <prop key="location">alfresco/module/${project.artifactId}/bootstrap/event.scheduling.spaces.xml</prop>
+            <prop key="messages">alfresco/module/${project.artifactId}/messages/bootstrap-event-scheduling</prop>
+            <prop key="childAssocType">cm:contains</prop>
+          </props>
+      </property>
+    </bean>
+
+    <bean id="event.scheduling.group.system.bootstrap" class="org.alfresco.repo.module.ImporterModuleComponent" parent="module.baseComponent">
+      <property name="moduleId" value="event-scheduling-alfresco" />
+      <property name="name" value="Event scheduling" />
+      <property name="description" value="Event scheduling group." />
+      <property name="executeOnceOnly" value="true" />
+      <property name="importer" ref="spacesBootstrap" />
+      <property name="bootstrapView">
+          <props>
+            <prop key="path">/${system.system_container.childname}/${system.authorities_container.childname}</prop>
+            <prop key="location">alfresco/module/${project.artifactId}/bootstrap/event.scheduling.group.xml</prop>
+            <prop key="messages">alfresco/module/${project.artifactId}/messages/bootstrap-event-scheduling</prop>
+            <prop key="childAssocType">sys:children</prop>
+          </props>
+      </property>
+    </bean>
+
+    <bean id="event.scheduling.group-zone-patch.system.bootstrap" class="org.alfresco.repo.module.ImporterModuleComponent" parent="module.baseComponent">
+      <property name="moduleId" value="event-scheduling-alfresco" />
+      <property name="name" value="Event scheduling" />
+      <property name="description" value="Event scheduling group zone patch." />
+      <property name="executeOnceOnly" value="true" />
+      <property name="importer" ref="spacesBootstrap" />
+      <property name="dependsOn">
+        <ref bean="event.scheduling.group.system.bootstrap" />
+      </property>
+      <property name="bootstrapView">
+          <props>
+            <prop key="path">/${alfresco_user_store.system_container.childname}</prop>
+            <prop key="location">alfresco/module/${project.artifactId}/bootstrap/event.scheduling.group-zone-patch.xml</prop>
+            <prop key="messages">alfresco/module/${project.artifactId}/messages/bootstrap-event-scheduling</prop>
+          </props>
+      </property>
+    </bean>
+</beans>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view:view xmlns:view="http://www.alfresco.org/view/repository/1.0" xmlns:cm="http://www.alfresco.org/model/content/1.0" xmlns:app="http://www.alfresco.org/model/application/1.0">
+  <cm:folder view:childName="app:event_scheduling">
+    <view:acl view:inherit="false">
+       <view:ace view:access="ALLOWED">
+          <view:authority>GROUP_EVERYONE</view:authority>
+          <view:permission>Consumer</view:permission>
+       </view:ace>
+    </view:acl>
+    <app:uifacets/>
+    <cm:name>${spaces.event_scheduling.name}</cm:name>
+    <app:icon>space-icon-default</app:icon>
+    <cm:title>${spaces.event_scheduling.name}</cm:title>
+    <cm:description>${spaces.event_scheduling.description}</cm:description>
+    <cm:contains>
+       <cm:folder view:childName="app:event_scheduling_email_templates">
+          <app:uifacets/>
+          <cm:name>${spaces.event_scheduling.templates.email.name}</cm:name>
+          <app:icon>space-icon-default</app:icon>
+          <cm:title>${spaces.event_scheduling.templates.email.name}</cm:title>
+          <cm:description>${spaces.event_scheduling.templates.email.description}</cm:description>
+          <cm:contains>
+            <cm:content view:childName="cm:event_created_email.ftl">
+              <view:aspects>
+                <cm:titled></cm:titled>
+                <app:inlineeditable></app:inlineeditable>
+              </view:aspects>
+              <view:properties>
+                <cm:name>event_created_email.ftl</cm:name>
+                <cm:title>event_created_email.ftl</cm:title>
+                <cm:description>Email template to notify users that an event has been created</cm:description>
+                <cm:content>contentUrl=classpath:alfresco/module/${project.artifactId}/templates/event_created_email.ftl|mimetype=text/plain|size=|encoding=UTF-8|locale=en</cm:content>
+                <app:editInline>true</app:editInline>
+              </view:properties>
+              <view:associations></view:associations>
+            </cm:content>
+            <cm:content view:childName="cm:event_created_email_fr.ftl">
+              <view:aspects>
+                <cm:titled></cm:titled>
+                <app:inlineeditable></app:inlineeditable>
+              </view:aspects>
+              <view:properties>
+                <cm:name>event_created_email_fr.ftl</cm:name>
+                <cm:title>event_created_email_fr.ftl</cm:title>
+                <cm:description>Modèle de mail pour notifier les utilisateurs qu'un événement a été créé</cm:description>
+                <cm:content>contentUrl=classpath:alfresco/module/${project.artifactId}/templates/event_created_email_fr.ftl|mimetype=text/plain|size=|encoding=UTF-8|locale=fr</cm:content>
+                <app:editInline>true</app:editInline>
+              </view:properties>
+              <view:associations></view:associations>
+            </cm:content>
+
+            <cm:content view:childName="cm:event_reminder_email.ftl">
+              <view:aspects>
+                <cm:titled></cm:titled>
+                <app:inlineeditable></app:inlineeditable>
+              </view:aspects>
+              <view:properties>
+                <cm:name>event_reminder_email.ftl</cm:name>
+                <cm:title>event_reminder_email.ftl</cm:title>
+                <cm:description>Email template to send a reminder to users</cm:description>
+                <cm:content>contentUrl=classpath:alfresco/module/${project.artifactId}/templates/event_reminder_email.ftl|mimetype=text/plain|size=|encoding=UTF-8|locale=en</cm:content>
+                <app:editInline>true</app:editInline>
+              </view:properties>
+              <view:associations></view:associations>
+            </cm:content>
+            <cm:content view:childName="cm:event_reminder_email_fr.ftl">
+              <view:aspects>
+                <cm:titled></cm:titled>
+                <app:inlineeditable></app:inlineeditable>
+              </view:aspects>
+              <view:properties>
+                <cm:name>event_reminder_email_fr.ftl</cm:name>
+                <cm:title>event_reminder_email_fr.ftl</cm:title>
+                <cm:description>Modèle de mail pour envoyer un rappel aux utilisateurs</cm:description>
+                <cm:content>contentUrl=classpath:alfresco/module/${project.artifactId}/templates/event_reminder_email_fr.ftl|mimetype=text/plain|size=|encoding=UTF-8|locale=fr</cm:content>
+                <app:editInline>true</app:editInline>
+              </view:properties>
+              <view:associations></view:associations>
+            </cm:content>
+          </cm:contains>
+       </cm:folder>
+       <cm:folder view:childName="app:event_scheduling_events">
+          <view:acl view:inherit="false">
+             <view:ace view:access="ALLOWED">
+                <view:authority>GROUP_EVERYONE</view:authority>
+                <view:permission>Contributor</view:permission>
+             </view:ace>
+          </view:acl>
+          <app:uifacets/>
+          <cm:name>${spaces.event_scheduling.events.name}</cm:name>
+          <app:icon>space-icon-default</app:icon>
+          <cm:title>${spaces.event_scheduling.events.name}</cm:title>
+          <cm:description>${spaces.event_scheduling.events.description}</cm:description>
+       </cm:folder>
+       <!--
+       <cm:folder view:childName="app:event_scheduling_archives">
+          <app:uifacets/>
+          <cm:name>${spaces.event_scheduling.archives.name}</cm:name>
+          <app:icon>space-icon-default</app:icon>
+          <cm:title>${spaces.event_scheduling.archives.name}</cm:title>
+          <cm:description>${spaces.event_scheduling.archives.description}</cm:description>
+       </cm:folder>
+       -->
+    </cm:contains>
+  </cm:folder>
+</view:view>
