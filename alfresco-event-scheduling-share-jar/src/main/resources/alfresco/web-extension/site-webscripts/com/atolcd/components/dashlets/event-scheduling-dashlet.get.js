@@ -64,10 +64,14 @@ function main() {
               }
         	  groups = EventSchedulingDefaultGroups
           } 
-    	  if (groups) {
-	    	  for (var j = 0; j < groups.size(); j++)
+   	      if (groups) {
+    	      // groups might be an array, if using the default, or it might be an object
+    	      var size = groups instanceof Array ? groups.length : groups.size();
+	    	  for (var j = 0; j < size; j++)
 	          {
-	          	if(String(groups.get(j).getValue()) === String(obj.role)) {
+	            // if using the default groups array, there is no get or getValue method
+	            var val = groups instanceof Array ? groups[j] : groups.get(j).getValue();
+	          	if(String(val) === String(obj.role)) {
 	          		canCreateEvent = true;
 	          		break;
 	          	}	              
